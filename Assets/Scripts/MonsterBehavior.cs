@@ -1,32 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MonsterBehavior : MonoBehaviour
 {
     private Animator anim;
+    private NavMeshAgent agent;
+    public GameObject target;
+    //private LineRenderer lr;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
+        anim.SetInteger("NPCState", 0);
+        agent = GetComponent<NavMeshAgent>();
+        agent.enabled = false;
+        //lr = GetComponent<LineRenderer>();
+        //lr.positionCount = 0;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("x"))
+        if (agent.enabled)
         {
-            anim.SetBool("IsWalking", true);
+            agent.SetDestination(target.transform.position);
+            //lr.positionCount = agent.path.corners.Length;
+            //for (int i = 0; i < agent.path.corners.Length; i++)
+                //lr.SetPosition(i, agent.path.corners[i]);
+
         }
-        else
-        {
-            if (Input.GetKey("z"))
-                anim.SetBool("IsDying", true);
-            else
-                anim.SetBool("IsWalking", false);
-        }
-           
+            
+ 
 
 
     }
